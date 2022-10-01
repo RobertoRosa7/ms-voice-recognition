@@ -12,10 +12,12 @@ switch(JOB_BASE_NAME) {
 }
 
 pipeline {
-   agent {
-        node {
-            sleep 10
-            echo 'Hello'
+   agent any
+   stages {
+        stage('Build') {
+            steps{
+                echo "this is first"
+            }
         }
-    }
+   }
 }
