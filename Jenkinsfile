@@ -16,7 +16,7 @@ pipeline {
    stages {
         stage('Build') {
             steps{
-                echo "this is first"
+                sh "mvn -v"
             }
         }
    }
