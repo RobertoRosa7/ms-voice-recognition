@@ -3,10 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>br.com.sascar.integration.parent</groupId>
-    <artifactId>sascar-integration-pom-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.5.0</version>
   </parent>
+  <!--  <parent>-->
+  <!--    <groupId>br.com.sascar.integration.parent</groupId>-->
+  <!--    <artifactId>sascar-integration-pom-parent</artifactId>-->
+  <!--    <version>1.0.0-SNAPSHOT</version>-->
+  <!--  </parent>-->
 
   <groupId>br.com.cloudmessage</groupId>
   <artifactId>cloudmessage</artifactId>
@@ -20,9 +25,9 @@
     <java.version>11</java.version>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-<!--    <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>-->
-<!--    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>-->
-<!--    <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>-->
+    <!--    <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>-->
+    <!--    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>-->
+    <!--    <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>-->
   </properties>
 
   <dependencies>
@@ -70,10 +75,10 @@
       <artifactId>spring-tx</artifactId>
       <version>5.3.7</version>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>org.springframework.boot</groupId>-->
+    <!--      <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -96,14 +101,15 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger2</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger-ui</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>io.springfox</groupId>-->
+<!--      <artifactId>springfox-swagger2</artifactId>-->
+<!--      <version>2.8.0</version>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>io.springfox</groupId>-->
+<!--      <artifactId>springfox-swagger-ui</artifactId>-->
+<!--    </dependency>-->
 
     <!-- google -->
     <!--    <dependency>-->
@@ -184,36 +190,36 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-<!--      <plugin>-->
-<!--        <groupId>org.jacoco</groupId>-->
-<!--        <artifactId>jacoco-maven-plugin</artifactId>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>prepare-agent</id>-->
-<!--            <goals>-->
-<!--              <goal>prepare-agent</goal>-->
-<!--            </goals>-->
-<!--          </execution>-->
-<!--          <execution>-->
-<!--            <id>report</id>-->
-<!--            <phase>prepare-package</phase>-->
-<!--            <goals>-->
-<!--              <goal>report</goal>-->
-<!--            </goals>-->
-<!--          </execution>-->
-<!--&lt;!&ndash;          <execution>&ndash;&gt;-->
-<!--&lt;!&ndash;            <id>post-unit-test</id>&ndash;&gt;-->
-<!--&lt;!&ndash;            <phase>test</phase>&ndash;&gt;-->
-<!--&lt;!&ndash;            <goals>&ndash;&gt;-->
-<!--&lt;!&ndash;              <goal>report</goal>&ndash;&gt;-->
-<!--&lt;!&ndash;            </goals>&ndash;&gt;-->
-<!--&lt;!&ndash;            <configuration>&ndash;&gt;-->
-<!--&lt;!&ndash;              <dataFile>target/jacoco.exec</dataFile>&ndash;&gt;-->
-<!--&lt;!&ndash;              <outputDirectory>target/jacoco-ut</outputDirectory>&ndash;&gt;-->
-<!--&lt;!&ndash;            </configuration>&ndash;&gt;-->
-<!--&lt;!&ndash;          </execution>&ndash;&gt;-->
-<!--        </executions>-->
-<!--      </plugin>-->
+      <!--      <plugin>-->
+      <!--        <groupId>org.jacoco</groupId>-->
+      <!--        <artifactId>jacoco-maven-plugin</artifactId>-->
+      <!--        <executions>-->
+      <!--          <execution>-->
+      <!--            <id>prepare-agent</id>-->
+      <!--            <goals>-->
+      <!--              <goal>prepare-agent</goal>-->
+      <!--            </goals>-->
+      <!--          </execution>-->
+      <!--          <execution>-->
+      <!--            <id>report</id>-->
+      <!--            <phase>prepare-package</phase>-->
+      <!--            <goals>-->
+      <!--              <goal>report</goal>-->
+      <!--            </goals>-->
+      <!--          </execution>-->
+      <!--&lt;!&ndash;          <execution>&ndash;&gt;-->
+      <!--&lt;!&ndash;            <id>post-unit-test</id>&ndash;&gt;-->
+      <!--&lt;!&ndash;            <phase>test</phase>&ndash;&gt;-->
+      <!--&lt;!&ndash;            <goals>&ndash;&gt;-->
+      <!--&lt;!&ndash;              <goal>report</goal>&ndash;&gt;-->
+      <!--&lt;!&ndash;            </goals>&ndash;&gt;-->
+      <!--&lt;!&ndash;            <configuration>&ndash;&gt;-->
+      <!--&lt;!&ndash;              <dataFile>target/jacoco.exec</dataFile>&ndash;&gt;-->
+      <!--&lt;!&ndash;              <outputDirectory>target/jacoco-ut</outputDirectory>&ndash;&gt;-->
+      <!--&lt;!&ndash;            </configuration>&ndash;&gt;-->
+      <!--&lt;!&ndash;          </execution>&ndash;&gt;-->
+      <!--        </executions>-->
+      <!--      </plugin>-->
 
     </plugins>
   </build>
