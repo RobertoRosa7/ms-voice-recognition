@@ -12,12 +12,7 @@ switch(JOB_BASE_NAME) {
 }
 
 pipeline {
-   agent {
-        node {
-            echo "hello"
-        }
-   }
-
+   agent any
    stages {
         stage('Build') {
             steps{
