@@ -13,11 +13,14 @@ switch(JOB_BASE_NAME) {
 
 pipeline {
    agent any
+   tools {
+       maven 'maven-3.6.0'
+   }
    stages {
         stage('Build') {
             steps{
                 sh "mvn -v"
-                sh "sudo mvn -DskipTests install"
+                sh "mvn -DskipTests install"
             }
         }
    }
