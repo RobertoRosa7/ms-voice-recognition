@@ -1,6 +1,7 @@
 BUILD_TARGET = ["main"]
 DEPLOY_TARGET = ["main"]
 namespace = "service-cloud-message"
+buildAgentLabel = "maven-java-11"
 switch(JOB_BASE_NAME) {
     case "main":
         SHORT_ENV           = "prod"
@@ -11,6 +12,11 @@ switch(JOB_BASE_NAME) {
 }
 
 pipeline {
+   agent {
+        node {
+            label "${buildAgentLabel}"
+        }
+    }
     stages {
         stage("Aproval") {
             steps {
