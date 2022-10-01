@@ -12,11 +12,12 @@ switch(JOB_BASE_NAME) {
 }
 
 pipeline {
-   agent any
-   tools {
-        maven 'Maven 3.6.0'
-        jdk 'jdk11'
+   agent {
+        node {
+            echo "hello"
+        }
    }
+
    stages {
         stage('Build') {
             steps{
