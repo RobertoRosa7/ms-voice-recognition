@@ -6,18 +6,14 @@ switch(JOB_BASE_NAME) {
         SHORT_ENV           = "prod"
         PROJECT_NAME        = "${SHORT_ENV}-${namespace}"
         ENVIRONMENT         = "main"
-        BUILD_PROJECT_NAME  = "prod-${namespace}" // Used the homologation enviroment for construction
+        BUILD_PROJECT_NAME  = "prod-${namespace}"
     break
 }
 
 pipeline {
     stages {
         stage("Aproval") {
-            when {
-                environment name:"DEPLOY_TO", value:"main"
-            }
             steps {
-                //echo sh(script: "env|sort", returnStdout: true)
                 echo "Aproval"
             }
         }
