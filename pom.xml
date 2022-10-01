@@ -20,9 +20,9 @@
     <java.version>11</java.version>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-    <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
-    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-    <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
+<!--    <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>-->
+<!--    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>-->
+<!--    <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>-->
   </properties>
 
   <dependencies>
@@ -184,36 +184,36 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>post-unit-test</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-            <configuration>
-              <dataFile>target/jacoco.exec</dataFile>
-              <outputDirectory>target/jacoco-ut</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.jacoco</groupId>-->
+<!--        <artifactId>jacoco-maven-plugin</artifactId>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>prepare-agent</id>-->
+<!--            <goals>-->
+<!--              <goal>prepare-agent</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--          <execution>-->
+<!--            <id>report</id>-->
+<!--            <phase>prepare-package</phase>-->
+<!--            <goals>-->
+<!--              <goal>report</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--&lt;!&ndash;          <execution>&ndash;&gt;-->
+<!--&lt;!&ndash;            <id>post-unit-test</id>&ndash;&gt;-->
+<!--&lt;!&ndash;            <phase>test</phase>&ndash;&gt;-->
+<!--&lt;!&ndash;            <goals>&ndash;&gt;-->
+<!--&lt;!&ndash;              <goal>report</goal>&ndash;&gt;-->
+<!--&lt;!&ndash;            </goals>&ndash;&gt;-->
+<!--&lt;!&ndash;            <configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;              <dataFile>target/jacoco.exec</dataFile>&ndash;&gt;-->
+<!--&lt;!&ndash;              <outputDirectory>target/jacoco-ut</outputDirectory>&ndash;&gt;-->
+<!--&lt;!&ndash;            </configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;          </execution>&ndash;&gt;-->
+<!--        </executions>-->
+<!--      </plugin>-->
 
     </plugins>
   </build>
