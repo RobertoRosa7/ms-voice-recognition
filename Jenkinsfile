@@ -22,10 +22,11 @@ pipeline {
         DEPLOY_TO = "${GIT_BRANCH}"
    }
    stages {
-        stage('Build') {
+        stage('Maven Install') {
             steps{
                 echo DEPLOY_TO
                 sh "mvn -v"
+                sh "mvn -DskipTests install"
             }
         }
    }
