@@ -14,14 +14,8 @@ switch(JOB_BASE_NAME) {
 pipeline {
    agent {
         node {
-            label "${buildAgentLabel}"
-        }
-    }
-    stages {
-        stage("Aproval") {
-            steps {
-                echo "Aproval"
-            }
+            sleep 10
+            echo 'Hello'
         }
     }
 }
