@@ -48,7 +48,7 @@ pipeline {
                        dir("${WORKSPACE}/.ansible") {
                            sh """
                                ansible-playbook main.yml -i hosts.ini -u vagrant --private-key=${keyfile} --extra-vars '{ \
-                                   "target":"${SHORT_ENV}",
+                                   "hosts":"${SHORT_ENV}",
                                }'
                            """
                        }
