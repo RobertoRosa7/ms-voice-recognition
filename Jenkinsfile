@@ -30,7 +30,7 @@ pipeline {
         stage('Compress Artifact') {
            steps {
                script{
-                   sh ("tar -czpf ${APP_NAME}.tgz target --exclude-vcs --exclude=Jenkinsfile --exclude='.ansible/' --exclude=${APP_NAME}.tar.gz; mv ${APP_NAME}.tgz /tmp/")
+                   sh ("tar -czpf ${APP_NAME}.tgz * --exclude-vcs --exclude=Jenkinsfile --exclude='.ansible/' --exclude=${APP_NAME}.tar.gz; mv ${APP_NAME}.tgz /tmp/")
                }
            }
        }

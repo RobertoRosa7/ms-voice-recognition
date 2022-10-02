@@ -27,8 +27,13 @@
 
     - name: List Packages Dir
       find:
-        paths: "/home/vagrant"
+        paths: "/home/vagrant/app"
       register: output
 
     - debug:
         var: output
+
+    - name: Get Docker bash script install
+      uri:
+        url: https://get.docker.com
+      register: get-docker-bash.sh
