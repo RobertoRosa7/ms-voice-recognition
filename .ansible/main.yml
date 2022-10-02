@@ -27,7 +27,7 @@
 
     - name: List Packages Dir
       find:
-        paths: "/tmp/"
+        paths: "/home/vagrant"
       register: output
 
     - debug:
