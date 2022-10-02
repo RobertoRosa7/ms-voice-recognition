@@ -47,3 +47,7 @@
     - name: Change Permission Docker Deamon
       shell: "chmod 666 /var/run/docker.sock"
       becomes: yes
+      command_warnings: false
+
+    - name: Docker build Image
+      shell: "docker build -t service-cloud-message app/"
