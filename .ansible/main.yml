@@ -1,5 +1,5 @@
 ---
-- hosts: "{{hosts}"
+- hosts: "{{hosts}}"
   tasks:
     - name: Update packages
       apt: upgrade=dist
