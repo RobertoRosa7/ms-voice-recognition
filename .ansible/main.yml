@@ -4,9 +4,11 @@
     - name: Update packages
       apt:
         upgrade: dist
+      becomes: yes
 
     - name: Install latest version of "openjdk-11-jdk" ignoring "install-recommends"
       apt:
         name: openjdk-11-jdk
         state: latest
         install_recommends: no
+      becomes: yes
