@@ -4,11 +4,26 @@
     - name: Update packages
       apt:
         upgrade: dist
-      becomes: yes
 
     - name: Install latest version of "openjdk-11-jdk" ignoring "install-recommends"
       apt:
         name: openjdk-11-jdk
         state: latest
         install_recommends: no
-      becomes: yes
+
+    - name: Creates directory
+      file:
+        path: '/home/vagrant/app'
+        state: directory
+        owner: "vagrant"
+        group: "vagrant"
+
+    - name: Unpack deploy files
+      unarchive:
+        src: "/tmp/service-cloud-message.tgz"
+        dest: "/home/vagrant/app"
+        owner: "vagrant"
+        group: "vagrant"
+
+    - name: List Packages Dir
+      shell: "ls /home/vagrant/app"
