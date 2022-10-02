@@ -2,6 +2,11 @@
 - hosts: "{{target}}"
   tasks:
     - name: Update packages
-      apt:
-        name: update
-      become: yes
+      ansible.builtin.apt:
+        upgrade: dist
+
+    - name: Install latest version of "openjdk-6-jdk" ignoring "install-recommends"
+      ansible.builtin.apt:
+        name: openjdk-11-jdk
+        state: latest
+        install_recommends: no
