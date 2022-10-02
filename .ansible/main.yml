@@ -2,4 +2,6 @@
 - hosts: "{{target}}"
   tasks:
     - name: Update packages
-      apt: upgrade=dist
+      apt:
+        name: update
+      become: yes
