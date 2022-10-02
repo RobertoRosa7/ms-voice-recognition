@@ -1,6 +1,7 @@
 BUILD_TARGET = ["main"]
 DEPLOY_TARGET = ["main"]
 APP_NAME = "service-cloud-message"
+SHORT_ENV = "prod"
 switch(JOB_BASE_NAME) {
     case "main":
         SHORT_ENV           = "prod"
@@ -37,6 +38,7 @@ pipeline {
             steps {
                 script {
                     sh "ls /tmp"
+                    sh "echo ${JOB_BASE_NAME}"
                 }
             }
        }
