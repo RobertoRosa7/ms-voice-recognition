@@ -27,31 +27,38 @@ pipeline {
                 sh "mvn -DskipTests install"
             }
         }
-        stage('Compress Artifact') {
-           steps {
-               script{
-                   sh ("tar -czpf ${APP_NAME}.tgz * --exclude-vcs --exclude=Jenkinsfile --exclude='.ansible/' --exclude=${APP_NAME}.tar.gz; mv ${APP_NAME}.tgz /tmp/")
-               }
-           }
-       }
-       stage('list file on tmp') {
+        stage('Docer version') {
             steps {
-                script {
-                    sh "ls /tmp"
-                    sh "echo ${JOB_BASE_NAME}"
-
+                script{
+                    sh ("docker -v")
                 }
             }
-       }
-       stage("Deploy App") {
-           steps {
-                 withCredentials([sshUserPrivateKey(credentialsId: 'b188d8b1-7dce-429e-99e1-82ff15559618', keyFileVariable: 'keyfile')]) {
-                       dir("${WORKSPACE}/.ansible") {
-                            sh """ ansible-playbook main.yml -i hosts.ini -u vagrant --private-key=${keyfile} --extra-vars '{"target":"${SHORT_ENV}"}' """
-                            sh "ansible all --list-hosts"
-                       }
-                 }
-           }
-       }
+        }
+//         stage('Compress Artifact') {
+//            steps {
+//                script{
+//                    sh ("tar -czpf ${APP_NAME}.tgz * --exclude-vcs --exclude=Jenkinsfile --exclude='.ansible/' --exclude=${APP_NAME}.tar.gz; mv ${APP_NAME}.tgz /tmp/")
+//                }
+//            }
+//        }
+//        stage('list file on tmp') {
+//             steps {
+//                 script {
+//                     sh "ls /tmp"
+//                     sh "echo ${JOB_BASE_NAME}"
+//
+//                 }
+//             }
+//        }
+//        stage("Deploy App") {
+//            steps {
+//                  withCredentials([sshUserPrivateKey(credentialsId: 'b188d8b1-7dce-429e-99e1-82ff15559618', keyFileVariable: 'keyfile')]) {
+//                        dir("${WORKSPACE}/.ansible") {
+//                             sh """ ansible-playbook main.yml -i hosts.ini -u vagrant --private-key=${keyfile} --extra-vars '{"target":"${SHORT_ENV}"}' """
+//                             sh "ansible all --list-hosts"
+//                        }
+//                  }
+//            }
+//        }
    }
 }
