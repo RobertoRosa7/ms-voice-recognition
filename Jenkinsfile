@@ -48,7 +48,7 @@ pipeline {
                  withCredentials([sshUserPrivateKey(credentialsId: 'b188d8b1-7dce-429e-99e1-82ff15559618', keyFileVariable: 'keyfile')]) {
                        dir("${WORKSPACE}/.ansible") {
                             sh "ansible all --list-hosts"
-                            sh """ ansible-playbook main.yml -i hosts.ini -u vagrant --private-key=${keyfile} --extra-vars '{"target":"${SHORT_ENV}"}' """
+                            sh """ ansible-playbook main.yml -i 192.168.33.15 -u vagrant --private-key=${keyfile} --extra-vars '{"target":"${SHORT_ENV}"}' """
                        }
                  }
            }
