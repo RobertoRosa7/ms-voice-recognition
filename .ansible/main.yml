@@ -51,6 +51,9 @@
     - name: Docker build Image
       shell: "docker build -t service-cloud-message app/"
 
+    - name: Remove Exist Container
+      shell: "docker rm container-cloud-message -f"
+
     - name: Creata Container
       shell: "docker run -d --name container-cloud-message service-cloud-message -p 8080:8080"
 
