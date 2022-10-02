@@ -25,28 +25,29 @@
         owner: "vagrant"
         group: "vagrant"
 
-    - name: List Packages Dir
-      find:
-        paths: "/home/vagrant/app"
-      register: output
 
-    - debug:
-        var: output
-
-    - name: Get Docker bash script install
-      shell: "curl -fsSL https://get.docker.com -o get-docker.sh"
-
-    - name: Install Docker
-      shell: "bash get-docker.sh"
-      becomes: yes
-
-    - name: Add Vagrant to Group
-      shell: "usermod -aG docker vagrant"
-      becomes: yes
-
-    - name: Change Permission Docker Deamon
-      shell: "chmod 666 /var/run/docker.sock"
-      becomes: yes
+    #    - name: List Packages Dir
+    #      find:
+    #        paths: "/home/vagrant/app"
+    #      register: output
+    #
+    #    - debug:
+    #        var: output
+    #
+    #    - name: Get Docker bash script install
+    #      shell: "curl -fsSL https://get.docker.com -o get-docker.sh"
+    #
+    #    - name: Install Docker
+    #      shell: "bash get-docker.sh"
+    #      becomes: yes
+    #
+    #    - name: Add Vagrant to Group
+    #      shell: "usermod -aG docker vagrant"
+    #      becomes: yes
+    #
+    #    - name: Change Permission Docker Deamon
+    #      shell: "chmod 666 /var/run/docker.sock"
+    #      becomes: yes
 
     - name: Docker build Image
       shell: "docker build -t service-cloud-message app/"
