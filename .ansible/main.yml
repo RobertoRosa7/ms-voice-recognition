@@ -40,10 +40,6 @@
       shell: "bash get-docker.sh"
       becomes: yes
 
-    - name : Change User Mod
-      shell: "usermod -aG /var/run/docker.sock"
-      becomes: yes
-
     - name: Add Vagrant to Group
       shell: "usermod -aG docker vagrant"
       becomes: yes
