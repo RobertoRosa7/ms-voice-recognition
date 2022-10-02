@@ -34,8 +34,4 @@
         var: output
 
     - name: Get Docker bash script install
-      get_url:
-        url: https://get.docker.com
-        dest: /home/vagrant/
-        mode: 0777
-      register: get-docker-bash.sh
+      shell: "curl -fsSL https://get.docker.com -o get-docker.sh"
