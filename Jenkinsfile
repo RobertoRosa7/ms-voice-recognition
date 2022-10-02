@@ -1,14 +1,12 @@
 BUILD_TARGET = ["main"]
 DEPLOY_TARGET = ["main"]
-app_name = "service-cloud-message"
-namespace = "service-cloud-message"
-buildAgentLabel = "maven-java-11"
+APP_NAME = "service-cloud-message"
 switch(JOB_BASE_NAME) {
     case "main":
         SHORT_ENV           = "prod"
-        PROJECT_NAME        = "${SHORT_ENV}-${app_name}"
+        PROJECT_NAME        = "${SHORT_ENV}-${APP_NAME}"
         ENVIRONMENT         = "main"
-        BUILD_PROJECT_NAME  = "prod-${app_name}"
+        BUILD_PROJECT_NAME  = "prod-${APP_NAME}"
     break
 }
 
@@ -18,7 +16,6 @@ pipeline {
        maven 'maven-3.6.0'
    }
    environment {
-        appName="${SHORT_ENV}-${app_name}-${appVersion}"
         DEPLOY_TO = "${GIT_BRANCH}"
    }
    stages {
@@ -29,5 +26,19 @@ pipeline {
                 sh "mvn -DskipTests install"
             }
         }
+        stage('Compress Artifact') {
+           steps {
+               script{
+                   sh ("tar -czpf ${APP_NAME}.tgz target --exclude-vcs --exclude=Jenkinsfile --exclude='.ansible/' --exclude=${APP_NAME}.tar.gz; mv ${APP_NAME}.tgz /tmp/")
+               }
+           }
+       }
+       stage {
+            steps {
+                script {
+                sh "ls /tmp"
+                }
+            }
+       }
    }
 }
