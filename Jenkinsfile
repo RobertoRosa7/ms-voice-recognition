@@ -33,10 +33,10 @@ pipeline {
                }
            }
        }
-       stage {
+       stage('list file on tmp') {
             steps {
                 script {
-                sh "ls /tmp"
+                    sh "ls /tmp"
                 }
             }
        }
