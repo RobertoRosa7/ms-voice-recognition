@@ -33,6 +33,7 @@
     - debug:
         var: output
 
+
     - name: Get Docker bash script install
       shell: "curl -fsSL https://get.docker.com -o get-docker.sh"
 
