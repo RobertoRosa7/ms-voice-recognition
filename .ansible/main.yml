@@ -47,7 +47,12 @@
     - name: Change Permission Docker Deamon
       shell: "chmod 666 /var/run/docker.sock"
       becomes: yes
-      command_warnings: false
 
     - name: Docker build Image
       shell: "docker build -t service-cloud-message app/"
+
+    - name: Creata Container
+      shell: "docker run -d --name container-cloud-message service-cloud-message -p 8080:8080"
+
+    - name: Run Dokcer
+      shell: "docker start container-cloud-message"
