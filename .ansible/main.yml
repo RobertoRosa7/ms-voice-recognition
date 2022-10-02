@@ -26,4 +26,9 @@
         group: "vagrant"
 
     - name: List Packages Dir
-      shell: "ls /home/vagrant/app"
+      find:
+        paths: "/home/vagrant/app"
+      register: output
+
+    - debug:
+        var: output
