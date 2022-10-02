@@ -1,11 +1,12 @@
 BUILD_TARGET = ["main"]
 DEPLOY_TARGET = ["main"]
 APP_NAME = "service-cloud-message"
-SHORT_ENV = "prod"
+ENVIRONMENT = "prod"
+APP_VERSION = '1.0.0'
 switch(JOB_BASE_NAME) {
     case "main":
-        SHORT_ENV           = "prod"
-        PROJECT_NAME        = "${SHORT_ENV}-${APP_NAME}"
+        ENVIRONMENT           = "prod"
+        PROJECT_NAME        = "${ENVIRONMENT}-${APP_NAME}"
         ENVIRONMENT         = "main"
         BUILD_PROJECT_NAME  = "prod-${APP_NAME}"
     break
@@ -27,10 +28,17 @@ pipeline {
                 sh "mvn -DskipTests install"
             }
         }
-        stage('Docer version') {
+        stage('Docker version') {
             steps {
                 script{
                     sh ("docker -v")
+                }
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                script{
+                    sh ("docker build -t ${ENVIRONMENT}-${APP_NAME}:${APP_VERSION} .")
                 }
             }
         }
@@ -54,7 +62,7 @@ pipeline {
 //            steps {
 //                  withCredentials([sshUserPrivateKey(credentialsId: 'b188d8b1-7dce-429e-99e1-82ff15559618', keyFileVariable: 'keyfile')]) {
 //                        dir("${WORKSPACE}/.ansible") {
-//                             sh """ ansible-playbook main.yml -i hosts.ini -u vagrant --private-key=${keyfile} --extra-vars '{"target":"${SHORT_ENV}"}' """
+//                             sh """ ansible-playbook main.yml -i hosts.ini -u vagrant --private-key=${keyfile} --extra-vars '{"target":"${ENVIRONMENT}"}' """
 //                             sh "ansible all --list-hosts"
 //                        }
 //                  }
