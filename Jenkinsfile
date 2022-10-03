@@ -25,15 +25,9 @@ pipeline {
         stage('Maven Install') {
             steps{
                 echo DEPLOY_TO
+                echo JOB_BASE_NAME
                 sh "mvn -v"
                 sh "mvn -DskipTests install"
-            }
-        }
-        stage('Docker version') {
-            steps {
-                script{
-                    sh ("docker -v")
-                }
             }
         }
    }
