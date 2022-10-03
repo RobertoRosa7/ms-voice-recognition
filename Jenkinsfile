@@ -24,10 +24,7 @@ pipeline {
    stages {
         stage('Maven Install') {
             steps{
-                echo DEPLOY_TO
-                echo JOB_BASE_NAME
-                sh "mvn -v"
-                sh "mvn -DskipTests install"
+              sh "ls"
             }
         }
    }
