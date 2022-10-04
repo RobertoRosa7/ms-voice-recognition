@@ -28,13 +28,10 @@ pipeline {
               sh "mvn -DskipTests install"
             }
         }
-   }
-
-   stages {
-       stage('Docker Version') {
+        stage('Docker Version') {
            steps{
              sh "docker -v"
            }
        }
-  }
+   }
 }
