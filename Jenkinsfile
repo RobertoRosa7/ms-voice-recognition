@@ -2,6 +2,7 @@ BUILD_TARGET = ["main", "dev"]
 DEPLOY_TARGET = ["main", "dev"]
 APP_NAME = "service-cloud-message"
 APP_VERSION = '1.0.0'
+CONTAINER="con"
 switch(JOB_BASE_NAME) {
 	case "main":
 		ENVIRONMENT="prod"
@@ -24,27 +25,27 @@ pipeline {
 	stages {
 		stage('Maven Install') {
 			steps{
-				sh "mvn -DskipTests install"
+				sh ("mvn -DskipTests install")
 			}
 		}
 		stage('Docker Version') {
 			steps{
-				sh "docker -v"
+				sh ("docker -v")
 			}
 		}
 		stage('Docker Build') {
 			steps{
-				sh "docker build -t ${ENVIRONMENT}-${APP_NAME}:${APP_VERSION} ."
+				sh ("docker build -t ${ENVIRONMENT}-${APP_NAME}:${APP_VERSION} .")
 			}
 		}
 		stage('Docker Build Container') {
 			steps {
 				script {
 					try {
-						sh ("docker run -d --network mongo -p 8081:8081 --name con-${ENVIRONMENT}-${APP_NAME} ${ENVIRONMENT}-${APP_NAME}:${APP_VERSION}")
+						sh ("docker run -d --network mongo -p 8081:8081 --name ${ENVIRONMENT}-${CONTAINER}-${APP_NAME} ${ENVIRONMENT}-${APP_NAME}:${APP_VERSION}")
 					} catch(Exception e) {
-						sh ("docker rm -f con-${ENVIRONMENT}-${APP_NAME}")
-						sh ("docker run -d --network mongo -p 8081:8081 --name con-${ENVIRONMENT}-${APP_NAME} ${ENVIRONMENT}-${APP_NAME}:${APP_VERSION}")
+						sh ("docker rm -f ${ENVIRONMENT}-${CONTAINER}-${APP_NAME}")
+						sh ("docker run -d --network mongo -p 8081:8081 --name ${CONTAINER}-${ENVIRONMENT}-${APP_NAME} ${ENVIRONMENT}-${APP_NAME}:${APP_VERSION}")
 					}
 				}
 			}
