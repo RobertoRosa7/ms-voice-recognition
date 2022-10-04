@@ -33,7 +33,7 @@ pipeline {
              sh "docker -v"
            }
        }
-       stage('Docker Version') {
+       stage('Docker Build') {
           steps{
             sh "docker build -t ${ENVIRONMENT}-${APP_NAME}:${APP_VERSION} ."
           }
