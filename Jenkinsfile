@@ -21,6 +21,7 @@ pipeline {
    environment {
         DEPLOY_TO = "${GIT_BRANCH}"
    }
+
    stages {
         stage('Maven Install') {
             steps{
