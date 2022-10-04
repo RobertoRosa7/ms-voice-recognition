@@ -15,7 +15,7 @@ public class CloudMessageApplication {
 
 	@GetMapping("/")
 	public String getConnection() {
-		return "The Server is Ok";
+		return "The Server is Ok now it's using container";
 	}
 
 }
