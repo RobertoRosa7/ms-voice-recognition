@@ -43,7 +43,7 @@ pipeline {
 					try {
 						sh ("docker run -d --network mongo -p 8081:8081 --name con-${ENVIRONMENT}-${APP_NAME} ${ENVIRONMENT}-${APP_NAME}:${APP_VERSION}")
 					} catch(Exception e) {
-						sh ("docker rm -f con-${ENVIRONMENT}-${APP_NAME}:${APP_VERSION}")
+						sh ("docker rm -f con-${ENVIRONMENT}-${APP_NAME}")
 						sh ("docker run -d --network mongo -p 8081:8081 --name con-${ENVIRONMENT}-${APP_NAME} ${ENVIRONMENT}-${APP_NAME}:${APP_VERSION}")
 					}
 				}
