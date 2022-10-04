@@ -16,7 +16,7 @@ switch(JOB_BASE_NAME) {
 pipeline {
    agent any
    tools {
-       maven 'maven-3.6.0'
+       maven 'maven-3.6.3'
    }
    environment {
         DEPLOY_TO = "${GIT_BRANCH}"
