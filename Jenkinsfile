@@ -25,7 +25,7 @@ pipeline {
    stages {
         stage('Maven Install') {
             steps{
-              sh "ls"
+              sh "mvn -DskipTests install"
             }
         }
    }
