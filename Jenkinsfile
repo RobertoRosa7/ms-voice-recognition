@@ -38,6 +38,17 @@ pipeline {
 				sh ("docker build -t ${ENVIRONMENT}-${APP_NAME}:${APP_VERSION} .")
 			}
 		}
+		stage("Docker Login and Push Image") {
+      steps {
+        script{
+          withCredentials([usernamePassword(credentialsId: '484e578a-bdcf-4ff6-9f30-3e38aead052f', passwordVariable: 'docker_pass', usernameVariable: 'docker_user')]) {
+            sh("docker login -u $docker_user -p $docker_pass")
+            sh("docker tag ${ENVIRONMENT}-${APP_NAME}:${VERSION} $docker_user/${ENVIRONMENT}-${APP_NAME}:${VERSION}")
+            sh("docker push $docker_user/${ENVIRONMENT}-${APP_NAME}:${VERSION}")
+          }
+        }
+      }
+    }
 		stage('Docker Build Container') {
 			steps {
 				script {
