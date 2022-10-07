@@ -5,4 +5,5 @@ public interface MessageEndpoint {
 	String notificationSubscribe = "/notification/subscribe";
 	String notificationUnsubscribe = "/notification/unsubscribe";
 	String notificationGetPublicKey = "/notification/getPublicKey";
+	String file = "/file";
 }

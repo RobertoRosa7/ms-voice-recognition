@@ -24,10 +24,15 @@ import java.util.stream.Collectors;
 public class MessageService {
 
 	private final ObjectMapper mapper = new ObjectMapper();
+
 	@Value("${vapid.public.key}")
 	private String publicKey;
+
 	@Value("${vapid.private.key}")
 	private String privateKey;
+
+	private String icon = "http://localhost:5000/images/salon/61339308cc56f7e12fd42cb8/61339308cc56f7e12fd42cb8.jpeg";
+
 	private PushService pushService;
 	private List<Subscription> subscriptions = new ArrayList<>();
 
@@ -62,7 +67,11 @@ public class MessageService {
 	@Scheduled(fixedRate = 30000)
 	private void sendNotifications() {
 		System.out.println("Sending notifications to all subscribers: " + this.subscriptions.size());
-		subscriptions.forEach(subscription ->
-			sendNotification(subscription, new NotificationDto("teste", "teste").serialize()));
+		NotificationDto notificationDto = new NotificationDto(
+			"Roberto",
+			"Teste de Mensagem",
+			this.icon
+		);
+		subscriptions.forEach(subscription -> sendNotification(subscription, notificationDto.serialize()));
 	}
 }

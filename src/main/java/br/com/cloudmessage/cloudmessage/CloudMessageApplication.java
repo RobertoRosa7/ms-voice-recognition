@@ -32,6 +32,7 @@ public class CloudMessageApplication {
 				registry.addMapping(MessageEndpoint.notificationSubscribe).allowedOrigins("*");
 				registry.addMapping(MessageEndpoint.notificationUnsubscribe).allowedOrigins("*");
 				registry.addMapping(MessageEndpoint.notificationGetPublicKey).allowedOrigins("*");
+				registry.addMapping(MessageEndpoint.file).allowedOrigins("*");
 			}
 		};
 	}

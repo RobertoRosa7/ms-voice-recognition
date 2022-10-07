@@ -8,8 +8,8 @@ import java.io.Serializable;
 public class NotificationDto implements Serializable {
 	private Notification notification;
 
-	public NotificationDto(String title, String body) {
-		this.notification = new Notification(title, body);
+	public NotificationDto(String title, String body, String icon) {
+		this.notification = new Notification(title, body, icon);
 	}
 
 	public String serialize() {
@@ -28,8 +28,8 @@ public class NotificationDto implements Serializable {
 	}
 
 	public static class Notification {
-		private String title = "teste";
-		private String body = "teste";
+		private String title;
+		private String body;
 		private String badge;
 		private Object data;
 		private Dir dir;
@@ -44,9 +44,10 @@ public class NotificationDto implements Serializable {
 		private Integer[] vibrate;
 		private NotificationAction[] actions;
 
-		public Notification(String title, String body) {
+		public Notification(String title, String body, String icon) {
 			this.title = title;
 			this.body = body;
+			this.icon = icon;
 		}
 	}
 }
