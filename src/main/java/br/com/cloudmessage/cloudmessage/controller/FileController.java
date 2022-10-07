@@ -26,6 +26,9 @@ public class FileController {
 	@Value("${icon.path}")
 	private String iconPath;
 
+	@Value("${image.path}")
+	private String imagePath;
+
 	@Autowired
 	private FileService fileService;
 
@@ -44,6 +47,14 @@ public class FileController {
 		String path = this.fileService.fullPath(this.iconPath);
 		InputStream resources = this.fileService.getResources(path, name);
 		response.setContentType(String.valueOf(MediaType.APPLICATION_XML));
+		StreamUtils.copy(resources, response.getOutputStream());
+	}
+
+	@GetMapping(value = "/image/{name}")
+	public void downloadImage(@PathVariable("name") String name, HttpServletResponse response) throws IOException {
+		String path = this.fileService.fullPath(this.imagePath);
+		InputStream resources = this.fileService.getResources(path, name);
+		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 		StreamUtils.copy(resources, response.getOutputStream());
 	}
 }

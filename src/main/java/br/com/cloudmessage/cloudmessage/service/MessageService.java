@@ -31,7 +31,7 @@ public class MessageService {
 	@Value("${vapid.private.key}")
 	private String privateKey;
 
-	private String icon = "http://localhost:5000/images/salon/61339308cc56f7e12fd42cb8/61339308cc56f7e12fd42cb8.jpeg";
+	private String icon;
 
 	private PushService pushService;
 	private List<Subscription> subscriptions = new ArrayList<>();
@@ -72,6 +72,9 @@ public class MessageService {
 			"Teste de Mensagem",
 			this.icon
 		);
+
+		System.out.println(notificationDto.serialize());
+
 		subscriptions.forEach(subscription -> sendNotification(subscription, notificationDto.serialize()));
 	}
 }
