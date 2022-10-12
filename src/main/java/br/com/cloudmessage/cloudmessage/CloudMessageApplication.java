@@ -1,6 +1,7 @@
 package br.com.cloudmessage.cloudmessage;
 
 import br.com.cloudmessage.cloudmessage.endpoint.MessageEndpoint;
+import lombok.NonNull;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableScheduling
 public class CloudMessageApplication {
 
+	public static final String LOCALHOST_5000 = "http://localhost:5000";
+
 	public static void main(String[] args) {
 		SpringApplication.run(CloudMessageApplication.class, args);
 	}
@@ -28,13 +31,11 @@ public class CloudMessageApplication {
 	public WebMvcConfigurer cors() {
 		return new WebMvcConfigurer() {
 			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping(MessageEndpoint.notificationSubscribe).allowedOrigins("http://localhost:5000");
-				registry.addMapping(MessageEndpoint.notificationUnsubscribe).allowedOrigins("http://localhost:5000");
-				registry.addMapping(MessageEndpoint.notificationGetPublicKey).allowedOrigins("http://localhost:5000");
-				registry.addMapping(MessageEndpoint.file).allowedOrigins("http://localhost:5000");
+			public void addCorsMappings(@NonNull CorsRegistry registry) {
+				registry.addMapping(MessageEndpoint.AllEndpoint).allowedOrigins(LOCALHOST_5000);
 			}
 		};
 	}
+
 
 }
