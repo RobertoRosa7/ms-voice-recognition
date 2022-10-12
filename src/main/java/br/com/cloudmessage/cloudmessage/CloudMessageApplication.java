@@ -29,10 +29,10 @@ public class CloudMessageApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping(MessageEndpoint.notificationSubscribe).allowedOrigins("*");
-				registry.addMapping(MessageEndpoint.notificationUnsubscribe).allowedOrigins("*");
-				registry.addMapping(MessageEndpoint.notificationGetPublicKey).allowedOrigins("*");
-				registry.addMapping(MessageEndpoint.file).allowedOrigins("*");
+				registry.addMapping(MessageEndpoint.notificationSubscribe).allowedOrigins("http://localhost:5000");
+				registry.addMapping(MessageEndpoint.notificationUnsubscribe).allowedOrigins("http://localhost:5000");
+				registry.addMapping(MessageEndpoint.notificationGetPublicKey).allowedOrigins("http://localhost:5000");
+				registry.addMapping(MessageEndpoint.file).allowedOrigins("http://localhost:5000");
 			}
 		};
 	}

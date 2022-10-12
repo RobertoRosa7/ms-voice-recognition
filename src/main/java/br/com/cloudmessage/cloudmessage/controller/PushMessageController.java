@@ -16,7 +16,7 @@ public class PushMessageController {
 	@Autowired
 	private MessageService messageService;
 
-	@GetMapping(value = "/getPublicKey", produces = "application/json")
+	@GetMapping(value = "/request-publickey", produces = "application/json")
 	public ResponseEntity<PublicKeyDto> subscription() {
 		String publicKey = this.messageService.getPublicKey();
 
@@ -34,6 +34,4 @@ public class PushMessageController {
 		this.messageService.unsubscribe(sub.endpoint);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
-
-
 }
