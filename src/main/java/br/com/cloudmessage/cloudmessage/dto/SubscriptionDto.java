@@ -1,6 +1,6 @@
 package br.com.cloudmessage.cloudmessage.dto;
 
-import br.com.cloudmessage.cloudmessage.document.KeysDoc;
+import br.com.cloudmessage.cloudmessage.model.KeysModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -11,5 +11,5 @@ import lombok.Setter;
 public class SubscriptionDto {
 	private String endpoint;
 	private Integer expirationTime;
-	private KeysDoc keys;
+	private KeysModel keys;
 }

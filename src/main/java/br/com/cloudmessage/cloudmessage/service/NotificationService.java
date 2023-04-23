@@ -1,17 +1,15 @@
 package br.com.cloudmessage.cloudmessage.service;
 
-import br.com.cloudmessage.cloudmessage.document.ClientDoc;
-import br.com.cloudmessage.cloudmessage.document.KeysDoc;
-import br.com.cloudmessage.cloudmessage.document.NotificationDoc;
 import br.com.cloudmessage.cloudmessage.dto.NotificationDto;
+import br.com.cloudmessage.cloudmessage.model.ClientModel;
+import br.com.cloudmessage.cloudmessage.model.KeysModel;
+import br.com.cloudmessage.cloudmessage.model.NotificationModel;
 import br.com.cloudmessage.cloudmessage.model.TemplateMessage;
 import br.com.cloudmessage.cloudmessage.respository.NotificationRepository;
 import nl.martijndwars.webpush.Notification;
 import nl.martijndwars.webpush.PushService;
 import nl.martijndwars.webpush.Subscription;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bson.types.ObjectId;
-import org.jetbrains.annotations.NotNull;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,143 +28,138 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class NotificationService {
-	private final Map<String, TemplateMessage> exec = new HashMap<>();
+    private final Map<String, TemplateMessage> exec = new HashMap<>();
 
-	@Autowired
-	NotificationRepository notificationRepository;
+    @Autowired
+    NotificationRepository notificationRepository;
 
-	@Autowired
-	ClientService clientService;
+    @Autowired
+    ClientService clientService;
 
-	@Value("${vapid.public.key}")
-	private String publicKey;
+    @Value("${vapid.public.key}")
+    private String publicKey;
 
-	@Value("${vapid.private.key}")
-	private String privateKey;
+    @Value("${vapid.private.key}")
+    private String privateKey;
 
-	private PushService pushService;
+    private PushService pushService;
 
-	@NotNull
-	private static List<NotificationDto.NotificationAction> getNotificationActions() {
-		List<NotificationDto.NotificationAction> actionList = new ArrayList<>();
+    private static List<NotificationDto.NotificationAction> getNotificationActions() {
+        List<NotificationDto.NotificationAction> actionList = new ArrayList<>();
 
-		NotificationDto.NotificationAction action = new NotificationDto.NotificationAction();
-		action.setTitle("Excluir");
-		action.setAction("delete");
+//        NotificationDto.NotificationAction action = new NotificationDto.NotificationAction();
+//        action.setTitle("Excluir");
+//        action.setAction("delete");
+//
+//        NotificationDto.NotificationAction action2 = new NotificationDto.NotificationAction();
+//        action2.setTitle("Confirmar");
+//        action2.setAction("confirm");
+//
+//        actionList.add(action);
+//        actionList.add(action2);
+        return actionList;
+    }
 
-		NotificationDto.NotificationAction action2 = new NotificationDto.NotificationAction();
-		action2.setTitle("Confirmar");
-		action2.setAction("confirm");
+    public NotificationDto.Notification messageWelcome(ClientModel client) {
+        NotificationDto.Notification notification = new NotificationDto.Notification();
+        NotificationDto.NotificationAction[] actions = this.convert(getNotificationActions());
 
-		actionList.add(action);
-		actionList.add(action2);
-		return actionList;
-	}
+//        notification.setTitle("Welcome " + client.getName());
+//        notification.setBody("test body");
+//        notification.setIcon("http://localhost:8081/file/image/kakashi.jpg");
+//        notification.setActions(actions);
 
-	public NotificationDto.Notification messageWelcome(@NotNull ClientDoc client) {
-		NotificationDto.Notification notification = new NotificationDto.Notification();
-		NotificationDto.NotificationAction[] actions = this.convert(getNotificationActions());
+        return notification;
+    }
 
-		notification.setTitle("Welcome " + client.getName());
-		notification.setBody("test body");
-		notification.setIcon("http://localhost:8081/file/image/kakashi.jpg");
-		notification.setActions(actions);
+    public NotificationDto.Notification messageGoodBye(ClientModel client) {
+        NotificationDto.Notification notification = new NotificationDto.Notification();
 
-		return notification;
-	}
+//        notification.setTitle("Good Bye " + client.getName());
+//        notification.setBody("test body");
+//        notification.setIcon("http://localhost:8081/file/image/kakashi.jpg");
 
-	public NotificationDto.Notification messageGoodBye(@NotNull ClientDoc client) {
-		NotificationDto.Notification notification = new NotificationDto.Notification();
+        return notification;
+    }
 
-		notification.setTitle("Good Bye " + client.getName());
-		notification.setBody("test body");
-		notification.setIcon("http://localhost:8081/file/image/kakashi.jpg");
+    @PostConstruct // used when call service
+    private void init() throws GeneralSecurityException {
+        Security.addProvider(new BouncyCastleProvider());
+        pushService = new PushService(publicKey, privateKey);
 
-		return notification;
-	}
+        exec.put("welcome", this::messageWelcome);
+        exec.put("goodbye", this::messageGoodBye);
+    }
 
-	@PostConstruct // used when call service
-	private void init() throws GeneralSecurityException {
-		Security.addProvider(new BouncyCastleProvider());
-		pushService = new PushService(publicKey, privateKey);
+    public String getPublicKey() {
+        return publicKey;
+    }
 
-		exec.put("welcome", this::messageWelcome);
-		exec.put("goodbye", this::messageGoodBye);
-	}
+    public List<NotificationModel> getAll() {
+        return this.notificationRepository.findAll();
+    }
 
-	public String getPublicKey() {
-		return publicKey;
-	}
+    public NotificationModel findByClientId(Long id) {
+        return this.notificationRepository.getById(id);
+    }
 
-	public List<NotificationDoc> getAll() {
-		return this.notificationRepository.findAll();
-	}
+    public void sendNotification(Subscription subscription, String messageJson) {
+        try {
+            pushService.send(new Notification(subscription, messageJson));
+        } catch (GeneralSecurityException | IOException | JoseException | ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public NotificationDoc findByClientId(ObjectId id) {
-		return this.notificationRepository.findByClientId(id);
-	}
+    public void subscribe(NotificationModel subscription) {
+        System.out.println("Subscribed to " + subscription.getEndpoint());
+        NotificationModel notificationDoc = new NotificationModel();
+        KeysModel key = new KeysModel();
 
-	public void sendNotification(@NotNull Subscription subscription, @NotNull String messageJson) {
-		try {
-			pushService.send(new Notification(subscription, messageJson));
-		} catch (GeneralSecurityException | IOException | JoseException | ExecutionException | InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+//        key.setP256dh(subscription.getKeys().getP256dh());
+//        key.setAuth(subscription.getKeys().getAuth());
 
-	public void subscribe(@NotNull NotificationDoc subscription) {
-		System.out.println("Subscribed to " + subscription.getEndpoint());
-		NotificationDoc notificationDoc = new NotificationDoc();
-		KeysDoc key = new KeysDoc();
+        notificationDoc.setEndpoint(subscription.getEndpoint());
+//        notificationDoc.setKeys(key);
+        notificationDoc.setClient_id(subscription.getClient_id());
 
-		key.setP256dh(subscription.getKeys().getP256dh());
-		key.setAuth(subscription.getKeys().getAuth());
+        this.notificationRepository.save(notificationDoc);
+    }
 
-		notificationDoc.setEndpoint(subscription.getEndpoint());
-		notificationDoc.setKeys(key);
-		notificationDoc.setClient_id(subscription.getClient_id());
+    public void unsubscribe(NotificationModel subscription) throws Exception {
+        System.out.println("Unsubscribe from " + subscription.getEndpoint());
+        NotificationModel doc = findNotificationDocByClient(subscription);
 
-		this.notificationRepository.save(notificationDoc);
-	}
+        //        this.notificationRepository.deleteById(doc.get_id());
+    }
 
-	public void unsubscribe(@NotNull NotificationDoc subscription) throws Exception {
-		System.out.println("Unsubscribe from " + subscription.getEndpoint());
-		NotificationDoc doc = findNotificationDocByClient(subscription);
+    private NotificationModel findNotificationDocByClient(NotificationModel notificationDoc) {
+        return this.notificationRepository.findById(notificationDoc.getClient_id()).get();
+    }
 
-		if (doc == null) {
-			throw new Exception("Document not found");
-		}
+    public void sendMessage(NotificationModel body, String type) {
+        ClientModel client = this.clientService.getClientById(body.getClient_id());
 
-		this.notificationRepository.deleteById(doc.get_id());
-	}
+        NotificationDto notificationDto = new NotificationDto(this.getNotification(client, type));
+//        Subscription.Keys keys = new Subscription.Keys(body.getKeys().getP256dh(), body.getKeys().getAuth());
+//        Subscription subscribe = new Subscription(body.getEndpoint(), keys);
 
-	private NotificationDoc findNotificationDocByClient(@NotNull NotificationDoc notificationDoc) {
-		return this.notificationRepository.findByClientId(notificationDoc.getClient_id());
-	}
+//        this.sendNotification(subscribe, notificationDto.serialize());
+    }
 
-	public void sendMessage(@NotNull NotificationDoc body, @NotNull String type) {
-		ClientDoc client = this.clientService.getClientById(body.getClient_id());
+    private NotificationDto.Notification getNotification(ClientModel client, String type) {
+        return exec.get(type).execute(client);
+    }
 
-		NotificationDto notificationDto = new NotificationDto(this.getNotification(client, type));
-		Subscription.Keys keys = new Subscription.Keys(body.getKeys().getP256dh(), body.getKeys().getAuth());
-		Subscription subscribe = new Subscription(body.getEndpoint(), keys);
 
-		this.sendNotification(subscribe, notificationDto.serialize());
-	}
+    private NotificationDto.NotificationAction[] convert(List<NotificationDto.NotificationAction> list) {
+        NotificationDto.NotificationAction[] actions = new NotificationDto.NotificationAction[list.size()];
 
-	private NotificationDto.Notification getNotification(@NotNull ClientDoc client, @NotNull String type) {
-		return exec.get(type).execute(client);
-	}
+        for (int i = 0; i < list.size(); i++) {
+            NotificationDto.NotificationAction action = list.get(i);
+            actions[i] = action;
+        }
 
-	@NotNull
-	private NotificationDto.NotificationAction[] convert(@NotNull List<NotificationDto.NotificationAction> list) {
-		NotificationDto.NotificationAction[] actions = new NotificationDto.NotificationAction[list.size()];
-
-		for (int i = 0; i < list.size(); i++) {
-			NotificationDto.NotificationAction action = list.get(i);
-			actions[i] = action;
-		}
-
-		return actions;
-	}
+        return actions;
+    }
 }

@@ -1,8 +1,7 @@
 package br.com.cloudmessage.cloudmessage.respository;
 
-import br.com.cloudmessage.cloudmessage.document.ClientDoc;
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import br.com.cloudmessage.cloudmessage.model.ClientModel;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClientsRepository extends MongoRepository<ClientDoc, ObjectId> {
+public interface ClientsRepository extends JpaRepository<ClientModel, Long> {
 }
