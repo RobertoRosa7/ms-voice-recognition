@@ -8,8 +8,8 @@
         <version>2.7.11</version>
     </parent>
     <groupId>br.com.voicerecognition</groupId>
-    <artifactId>voicerecognition</artifactId>
-    <version>1.0.0</version>
+    <artifactId>ms-voice</artifactId>
+    <version>1.0.1</version>
     <name>Voice Recognition</name>
     <description>Search by Audio</description>
     <properties>
@@ -97,12 +97,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>io.github.bonigarcia</groupId>-->
-<!--            <artifactId>webdrivermanager</artifactId>-->
-<!--            <version>5.0.3</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -148,7 +142,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>cloud-message</finalName>
+        <finalName>ms-voice</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
