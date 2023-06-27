@@ -28,6 +28,10 @@ public class ProductService {
         return productRepository.findByName(name);
     }
 
+    public List<Product> findByDescription(String name) {
+        return productRepository.findByDescription(name);
+    }
+
     public List<Product> findAll() {
         return productRepository.findAll();
     }

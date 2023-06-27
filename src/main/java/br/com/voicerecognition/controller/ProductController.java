@@ -25,7 +25,7 @@ public class ProductController {
     public ResponseEntity<Product> create(@RequestBody() ProductDto body) {
         Product product = new Product();
 
-        product.setName(body.getName());
+        product.setName(body.getName().toLowerCase());
         product.setPrice(body.getPrice());
         product.setCreatedAt(LocalDateTime.now());
 
@@ -78,8 +78,10 @@ public class ProductController {
     }
 
     @GetMapping("/find-by-name")
-    public ResponseEntity<Product> findByName(@RequestParam String name) {
-        Product product = productService.findByName(name);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<List<Product>> findByName(@RequestParam String name) {
+        String[] search = name.split(" ");
+        String txt = search[search.length - 1].replace(".", "");
+        List<Product> products = productService.findByDescription(txt);
+        return ResponseEntity.ok(products);
     }
 }
